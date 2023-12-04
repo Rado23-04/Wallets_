@@ -106,7 +106,106 @@ paths:
           description: Account not found
         "500":
           description: Internal server error
+  /currencies:
+    get:
+      summary: Get all currencies
+      operationId: getCurrencies
+      tags:
+        - Currency
+      responses:
+        200:
+          description: The list of all currencies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Currency'
+        "500":
+          description: Internal server error
 
+    post:
+      summary: Add a Currency
+      operationId: addCurrency
+      tags:
+        - Currency
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Currency'
+      responses:
+        "201":
+          description: Currency added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Currency'
+        "500":
+          description: Internal server error
+
+  "/currencies/{id}":
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Currency ID
+
+    get:
+      summary: Get a Currency by ID
+      operationId: getCurrencyById
+      tags:
+        - Currency
+      responses:
+        "200":
+          description: Currency found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Currency'
+        "404":
+          description: Currency not found
+        "500":
+          description: Internal server error
+
+    put:
+      summary: Update a Currency by ID
+      operationId: updateCurrency
+      tags:
+        - Currency
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Currency'
+      responses:
+        "200":
+          description: Currency updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Currency'
+        "404":
+          description: Currency not found
+        "500":
+          description: Internal server error
+
+    delete:
+      summary: Delete a Currency by ID
+      operationId: deleteCurrency
+      tags:
+        - Currency
+      responses:
+        "204":
+          description: Currency deleted successfully
+        "404":
+          description: Currency not found
+        "500":
+          description: Internal server error
 components:
   schemas:
     Account:
@@ -129,6 +228,7 @@ components:
         account_type: "Savings"
         currency: "Ariary"
         create_date: "2023-01-01"
+
 
 
 
