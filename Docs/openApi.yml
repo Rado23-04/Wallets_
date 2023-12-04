@@ -206,6 +206,107 @@ paths:
           description: Currency not found
         "500":
           description: Internal server error
+  /transactions:
+    get:
+      summary: Get all transactions
+      operationId: getTransactions
+      tags:
+        - Transaction
+      responses:
+        200:
+          description: The list of all transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+        "500":
+          description: Internal server error
+
+    post:
+      summary: Add a Transaction
+      operationId: addTransaction
+      tags:
+        - Transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      responses:
+        "201":
+          description: Transaction added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        "500":
+          description: Internal server error
+
+  "/transactions/{id}":
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Transaction ID
+
+    get:
+      summary: Get a Transaction by ID
+      operationId: getTransactionById
+      tags:
+        - Transaction
+      responses:
+        "200":
+          description: Transaction found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal server error
+
+    put:
+      summary: Update a Transaction by ID
+      operationId: updateTransaction
+      tags:
+        - Transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      responses:
+        "200":
+          description: Transaction updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal server error
+
+    delete:
+      summary: Delete a Transaction by ID
+      operationId: deleteTransaction
+      tags:
+        - Transaction
+      responses:
+        "204":
+          description: Transaction deleted successfully
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal server error
+
 components:
   schemas:
     Account:
@@ -228,7 +329,42 @@ components:
         account_type: "Savings"
         currency: "Ariary"
         create_date: "2023-01-01"
-
-
-
-
+    Currency:
+      type: object
+      properties:
+        id:
+          type: number
+        code:
+          type: string
+        name:
+          type: string
+        exchange_rate:
+          type: number
+      example:
+        id: 1
+        code: "USD"
+        name: "US Dollar"
+        exchange_rate: 1
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: number
+        id_account:
+          type: number
+        rising:
+          type: number
+        transaction_type:
+          type: string
+        currency:
+          type: string
+        date:
+          type: string
+          format: date
+      example:
+        id: 1
+        id_account: 1
+        rising: 100
+        transaction_type: "dépôt"
+        currency: "Ariary"
+        date: "2023-01-05"
