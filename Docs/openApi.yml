@@ -1,0 +1,134 @@
+openapi: 3.0.3
+info:
+  title: Wallets
+  version: 1.1.0
+  description: STD22023 - STD22029
+servers:
+  - url: http://wallets.com
+paths:
+  /account:
+    post:
+      summary: Add an Account
+      operationId: addAccount
+      tags:
+        - Account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        "201":
+          description: Account added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        "500":
+          description: Internal server error
+    get:
+      tags:
+        - Account
+      summary: Get all accounts
+      description: Return all accounts in the database
+      operationId: getAccount
+      parameters:
+        - name: accountName
+          in: query
+          description: Filter returned accounts by given name
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: The list of filtered accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+  "/account/{id}":
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Account ID
+    get:
+      summary: Get an Account by ID
+      operationId: getAccountById
+      tags:
+        - Account
+      responses:
+        "200":
+          description: Account found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        "404":
+          description: Account not found
+        "500":
+          description: Internal server error
+    put:
+      tags:
+        - Account
+      summary: Create or update a list of accounts
+      operationId: crupdateAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Account'
+      responses:
+        200:
+          description: The list of created or updated accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+    delete:
+      summary: Delete an Account by ID
+      operationId: deleteAccount
+      tags:
+        - Account
+      responses:
+        "204":
+          description: Account deleted successfully
+        "404":
+          description: Account not found
+        "500":
+          description: Internal server error
+
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        id:
+          type: number
+        pay:
+          type: string
+        account_type:
+          type: string
+        currency:
+          type: string
+        create_date:
+          type: string
+          format: date
+      example:
+        id: 1
+        pay: "Kevin"
+        account_type: "Savings"
+        currency: "Ariary"
+        create_date: "2023-01-01"
+
+
+
