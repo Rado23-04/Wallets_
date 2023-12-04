@@ -3,12 +3,12 @@ package Main.generic;
 import java.util.List;
 
 public interface CrudOperations<T> {
-    List<T> findAll();
+    List<T> getAll();
 
-    List<T> saveAll(List<T> toSave);
-
-    T save(T toSave);
+    T insert(T insert);
+    T getById(T getByid);
 
     T delete(T toDelete);
+    T put (T put);
 
 }

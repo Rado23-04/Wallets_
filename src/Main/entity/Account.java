@@ -12,9 +12,9 @@ public class Account {
     private String pay;
     private String accountType;
     private int currencyId;
-    private Date createDate;
+    private String createDate;
 
-    public Account(int id, String pay, String accountType, int currencyId, Date createDate) {
+    public Account(int id, String pay, String accountType, int currencyId, String createDate) {
         this.id = id;
         this.pay = pay;
         this.accountType = accountType;
@@ -54,11 +54,11 @@ public class Account {
         this.currencyId = currencyId;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
